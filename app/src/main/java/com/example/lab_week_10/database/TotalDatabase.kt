@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Total::class], version = 1)
+@Database(entities = [Total::class], version = 2)
 abstract class TotalDatabase : RoomDatabase() {
 
     abstract fun totalDao(): TotalDao
@@ -13,19 +13,5 @@ abstract class TotalDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: TotalDatabase? = null
-
-        fun getDatabase(context: Context): TotalDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    TotalDatabase::class.java,
-                    "total_database"                )
-                    .allowMainThreadQueries() // boleh untuk testing
-                    .build()
-
-                INSTANCE = instance
-                instance
-            }
-        }
     }
 }
